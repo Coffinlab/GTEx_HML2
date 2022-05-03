@@ -1,0 +1,49 @@
+Adipose - Subcutaneous
+Adipose - Visceral
+Adrenal Gland
+Artery - Aorta
+Artery - Coronary
+Artery - Tibial
+Brain - Amygdala
+Brain - Anterior cingulate cortex
+Brain - Caudate
+Brain - Cerebellar Hemisphere
+Brain - Cerebellum
+Brain - Cortex
+Brain - Frontal Cortex
+Brain - Hippocampus
+Brain - Hypothalamus
+Brain - Nucleus accumbens
+Brain - Putamen
+Brain - Spinal cord
+Brain - Substantia nigra
+Breast - Mammary Tissue
+Cells - Cultured fibroblasts
+Cells - EBV-transformed lymphocytes
+Colon - Sigmoid
+Colon - Transverse
+Esophagus - Gastroesophageal Junction
+Esophagus - Mucosa
+Esophagus - Muscularis
+Heart - Atrial Appendage
+Heart - Left Ventricle
+Kidney - Cortex
+Liver
+Lung
+Minor Salivary Gland
+Muscle - Skeletal
+Nerve - Tibial
+Ovary
+Pancreas
+Pituitary
+Prostate
+Skin - Not Sun Exposed
+Skin - Sun Exposed
+Small Intestine - Terminal Ileum
+Spleen
+Stomach
+Testis
+Thyroid
+Uterus
+Vagina
+Whole Blood
