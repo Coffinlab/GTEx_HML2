@@ -1,0 +1,26 @@
+
+#Download
+File=ltrchecksites
+File2=
+File3=
+File4=redownload_fin
+Sample_Dir=/cluster/tufts/coffinlab/gtex/aburn01/V8/${File}
+Sample_Dir_2=/cluster/tufts/coffinlab/gtex/aburn01/V8/${File2}
+Sample_Dir_3=/cluster/tufts/coffinlab/gtex/aburn01/V8/${File3}
+Sample_Dir_4=/cluster/tufts/coffinlab/gtex/aburn01/V8/${File4}
+#Filter and Fastq
+Ref_Dir=/cluster/tufts/micr_coffin01/aburn01/Tools
+Clip_Path=/cluster/tufts/micr_coffin01/aburn01/Tools/Trimmomatic-0.38/adapters/TruSeq3-PE.fa
+Trim_Path=/cluster/tufts/micr_coffin01/aburn01/Tools/Trimmomatic-0.38/trimmomatic-0.38.jar
+#Alignment
+#Picard_Path="/usr/bin"
+Index_Dir=/cluster/tufts/micr_coffin01/aburn01/Genomes/hg38_tran
+#Adapter_File="merged.fa"
+#Ref_GTF="hg38.gtf"
+#CLIP="2:30:10"
+#LEADING=3
+#TRAILING=3
+#SLIDINGWINDOW="4:30"
+#MINLEN=75
+#PE1_FileTag="_1.fastq"
+#PE2_FileTag="_2.fastq"
