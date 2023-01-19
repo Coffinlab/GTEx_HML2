@@ -40,7 +40,7 @@ Demographics = "~/Documents/Coffin Lab/GTEx_HML2_Expression.nosync/GTEx_V7_V8"
 age = paste(figures,"Demographics/Age",sep="/")
 
 
-#load in meta data from Aidan
+#load in meta data
 meta = read.csv(paste(metadata,"SubjID_Pheno_V8.csv",sep="/"),header = TRUE)
 meta_mod = meta[,c("SUBJID","AGE")]
 colnames(meta_mod) = c("SUBJID","age")
