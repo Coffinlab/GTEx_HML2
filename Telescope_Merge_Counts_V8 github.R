@@ -32,20 +32,11 @@ head(datalist)
 
 #Move each tissue sample to correct dataframe by match with sample file
 V8ds <- read.delim("../GTEx_Analysis_v8_Annotations_SampleAttributesDS.txt")
+#Pull out SampleID and Tissue Site
 V8ds_trim <- select(V8ds, SAMPID, SMTSD)
 V8ds_trim$SMTSD <- gsub("\\s*\\([^\\)]+\\)", "", V8ds_trim$SMTSD)
 
-V8_samples <- list()
-Tissue_list_unique <- read.delim("Tissue_listref.txt", header = FALSE)
-
-  for (t in Tissue_list_unique) {
-    print(t)
-    body_site <- V8ds_trim[grep(t, V8ds_trim$SMTSD),]
-    body_site1 <- datalist[names(datalist) %in% body_site$SAMPID]
-    V8_samples[[t]] <- body_site1
-    
-  }
-  
+#Run the first time working with dataset to generate unique tissue list 
 for (i in (1:length(filelist_edited))) {
   c <-str_which(V8ds_trim$SAMPID, filelist_edited[i] )
   filelist_edited[i] = as.character(paste(V8ds_trim[c,2] , i, sep = "_"))
@@ -60,6 +51,18 @@ Tissue_list_unique
 
 write.csv(Tissue_list_unique, "Tissue_listref.csv")
 
+#Create V8 list and loop through each tissue adding samples that we have to the V8 sample list for each bodysite
+V8_samples <- list()
+Tissue_list_unique <- read.delim("Tissue_listref.txt", header = FALSE)
+
+  for (t in Tissue_list_unique$V1) {
+    print(t)
+    body_site <- V8ds_trim[grep(t, V8ds_trim$SMTSD),]
+    body_site1 <- datalist[names(datalist) %in% body_site$SAMPID]
+    V8_samples[[t]] <- body_site1
+    
+  }
+ 
 
 #load in row names
 gene_names = read.table("../all_ids", header=FALSE)
@@ -67,7 +70,7 @@ colnames(gene_names) = c("transcript")
 head(gene_names)
 dim(gene_names)
 
-
+#Split V8_Samples to individual tissue file
 for (i in (1:length(V8_samples))) {
   print(i)
   df <- V8_samples[[i]]
@@ -82,9 +85,7 @@ for (i in (1:length(V8_samples))) {
   }
   head(Telescope_Counts)
   Telescope_Counts[is.na(Telescope_Counts)] <- 0
-  #colnames(Telescope_Counts) <- c("Gene_names", unlist(lapply(df, function(x) x[[1]])) )
   head(Telescope_Counts)
-  #rownames(Telescope_Counts) = Telescope_Counts$Gene_names
   rownames(Telescope_Counts) = Telescope_Counts$transcript
   Telescope_Counts[,1] = NULL
   head(Telescope_Counts)
@@ -94,9 +95,11 @@ for (i in (1:length(V8_samples))) {
 }  
 
 #Rename V7 samples and Join with V8
+#Load in the datalist of V7 samples
 tissuemeta = "~/Documents/Coffin Lab/GTEx_HML2_Expression.nosync/Full GTEx_HML2_Expression 3.nosync"
+setwd(tissuemeta)
 File_Type="*_Telescope_output.csv"
-Telescopelist = list.files(pattern = File_Type)
+Telescopelist = list.files(tissuemeta, pattern = File_Type)
 V7_datalist = lapply(Telescopelist, read.csv, header=TRUE, sep =",", stringsAsFactors=FALSE)
 
 Telescopelist_edited = as.character(strsplit(Telescopelist, "_Telescope_output.csv"))
@@ -104,20 +107,19 @@ Telescopelist_edited
 names(V7_datalist) = Telescopelist_edited
 head(V7_datalist)
 
+#Replace V7 SRARunID with V8 GTEx Sample Name
 for (i in names(V7_datalist)) {
-#  Tissue = stringr::str_replace((names(V7_datalist)[[i]]), '_Telescope_output.csv', '')
-#  Tissue
   SRA_run_ID = read.delim(paste(tissuemeta,paste(i,"SraRunTable.txt",sep="_"),sep="/"),header=TRUE,sep="\t")
   meta_run_id <- SRA_run_ID[,c("Run","Sample_Name")]
   head(meta_run_id)
   names(V7_datalist[[i]]) <- meta_run_id$Sample_Name[match(names(V7_datalist[[i]]), meta_run_id$Run)]
   }
-
+#Save new V7 files
 for (i in names(V7_datalist)) {
   write.csv(V7_datalist[[i]], file = paste(names(V7_datalist[i]), "V7_SUBJID_Telescope_output.csv", sep = "_"))
 }
 
-
+#Join V7 and V8 files into V15 files
 File_Type="*V15_Telescope_output.csv"
 Telescopelist = list.files(pattern = File_Type)
 for (i in Telescopelist) {
