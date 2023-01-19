@@ -122,7 +122,7 @@ counts_filelist_edited
 names(counts_datalist) = counts_filelist_edited
 head(counts_datalist)
 
-#load in meta data from Aidan
+#load in meta data
 meta = read.csv(paste(metadata,"SUBJID_Pheno_V8.csv",sep="/"),header = TRUE)
 meta_mod = meta[,c("SUBJID","AGE", "SEX")]
 colnames(meta_mod) = c("SUBJID","age","sex")
@@ -564,11 +564,11 @@ ggplot(SpecTiss2, aes(x = factor(tissue), y = HML2_Sum)) +
   labs(title="Differences in HML-2 expression in regards to sex in GTEx, zoom in with outlier names",x="Tissue", y = "sample size")
 ggsave(path= sex, file = "sex differences HML2 expression outlier names.png")
 
-p <-ggplot(SpecTiss2, aes(x = factor(tissue), y = HML2_Sum, fill = sex)) +
+p <-ggplot(SpecTiss, aes(x = factor(tissue), y = HML2_Sum, fill = sex)) +
   geom_boxplot(position = position_dodge((width=1))) +
   labs(title="Biological Sex",x="Tissue", y = "HML2 TPM (sum/sample)")
-p + stat_n_text(angle = 90,size=3) + theme(axis.text.x = element_text(angle = 90, hjust = 1))
-ggsave(path= sex, file = "sex differences HML2 expression zoomwithns.pdf")
+p + theme(axis.text.x = element_text(angle = 90, hjust = 1), panel.background = element_blank(), axis.line = element_line(colour = "black"))
+ggsave(path= sex, file = "sex differences HML2 expression zoomwithnsnobackground.pdf")
 
 #reshape distribution data to plot
 test = big_data_tissue_final[,colnames(big_data_tissue_final) %like% "_percent"]
